@@ -14,9 +14,11 @@ pipeline{
             }
         }
         
-        stage('Compiling Stage'){
+        stage('Image Build') {
             steps{
-                sh 'python3 src/Alphabet.py'
+                script {
+                    dockerImage = docker.build registry
+                }
             }
         }
         
@@ -28,19 +30,12 @@ pipeline{
         
        stage('Code Analysis'){
             steps{
-                sh 'chmod +x ./code_analysis/analysis.sh'
-                sh './code_analysis/analysis.sh && exit'
+//                 sh 'chmod +x ./code_analysis/analysis.sh'
+//                 sh './code_analysis/analysis.sh && exit'
+                sh 'pylint src/output.py --reports=y'
 
             }
-        }
-        
-        stage('Image Build') {
-            steps{
-                script {
-                    dockerImage = docker.build registry
-                }
-            }
-        }
+        }        
         
         stage('Image Publish') {
             steps{  

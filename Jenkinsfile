@@ -26,7 +26,7 @@ pipeline{
         
        stage('Code Analysis'){
             steps{
-                sh 'nano code_analysis/analysis.bash'
+                sh './code_analysis/analysis.bash'
             }
         }
         

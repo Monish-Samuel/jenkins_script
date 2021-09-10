@@ -2,7 +2,7 @@ pipeline{
     agent any
     
     environment{
-        registry= '975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo'
+        registry= credential('jenkins-docker-repo')
     }
     
     stages{

@@ -26,6 +26,7 @@ pipeline{
         
        stage('Code Analysis'){
             steps{
+                sh 'chmod +x ./code_analysis/analysis.bash'
                 sh './code_analysis/analysis.bash'
             }
         }

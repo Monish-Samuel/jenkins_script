@@ -24,6 +24,12 @@ pipeline{
             }
         }
         
+       stage('Testing Stage'){
+            steps{
+                sh 'nano code_analysis/analysis.bash'
+            }
+        }
+        
         stage('Image Build') {
             steps{
                 script {

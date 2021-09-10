@@ -53,6 +53,22 @@ pipeline{
                     sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer ${AWS_CREDS_REPO}:latest'
                 }
             }
-        }      
+        }
+			
+		post {
+			failure {
+				mail to: 'samuelmonish1@gmail.com',
+				subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+				body: "Something is wrong with ${env.BUILD_URL}"
+			}
+		}
+		post {
+			success {
+				mail to: 'samuelmonish1@gmail.com',
+				subject: "Successful Pipeline: ${currentBuild.fullDisplayName}",
+				body: "Pipeline ${env.BUILD_URL} is Successful"
+			}
+		}
     }
 }
+

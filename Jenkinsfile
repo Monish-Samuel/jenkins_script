@@ -41,7 +41,7 @@ pipeline{
             }
         }
         
-        stage('Stop previous containers') {
+        stage('Deploying Image') {
             steps {
                 sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
                 sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'

@@ -8,7 +8,7 @@ pipeline{
     stages{
         stage('Source_Code_Checkout'){
             steps{
-                sh 'checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/docker-pipeline.git']]])'
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/docker-pipeline.git']]])
             }
         }
         

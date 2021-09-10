@@ -26,8 +26,8 @@ pipeline{
         
        stage('Code Analysis'){
             steps{
-//                 sh 'chmod +x ./code_analysis/analysis.bash'
-//                 sh './code_analysis/analysis.bash'
+//                 sh 'chmod +x ./code_analysis/analysis.sh'
+//                 sh './code_analysis/analysis.sh'
                 sh 'radon cc ../src/Alphabet.py'
                 sh 'radon cc ../src/output.py'
                 sh 'radon cc ../src/test_Alphabet.py'

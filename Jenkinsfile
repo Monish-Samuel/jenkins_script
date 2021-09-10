@@ -2,10 +2,7 @@ pipeline{
     agent any
     
     environment{
-        withCredentials([string(credentialsId: 'jenkins-docker-repo', variable: 'Jenkins-Docker-Connect')]) {
-    // some block
-    }
-        registry= 'Jenkins-Docker-Connect'
+        registry= '975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo'
     }
     
     stages{
@@ -47,7 +44,7 @@ pipeline{
             steps{  
                 script {
                     sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 975072647018.dkr.ecr.ap-south-1.amazonaws.com'
-                    sh 'docker push Jenkins-Docker-Connect:latest'
+                    sh 'docker push 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:latest'
                 }
             }
         }
@@ -57,7 +54,7 @@ pipeline{
                 sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
                 sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
                 script {
-                    sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer Jenkins-Docker-Connect:latest'
+                    sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:latest'
                 }
             }
         }      

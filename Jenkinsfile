@@ -3,6 +3,7 @@ pipeline{
     
     environment{
         AWS_CREDS_REPO= credentials('jenkins-docker-aws-id')
+        AWS_ECR_REPO= credentials('ECR-Repo-Name')
         registry= '${AWS_CREDS_REPO}'
     }
     
@@ -44,7 +45,7 @@ pipeline{
         stage('Image Publish') {
             steps{  
                 script {
-                    sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 975072647018.dkr.ecr.ap-south-1.amazonaws.com'
+                    sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin ${AWS_ECR_REPO}'
                     sh 'docker push ${AWS_CREDS_REPO}:latest'
                 }
             }

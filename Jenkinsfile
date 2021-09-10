@@ -24,7 +24,7 @@ pipeline{
             }
         }
         
-        stage('Building image') {
+        stage('Image Build') {
             steps{
                 script {
                     dockerImage = docker.build registry
@@ -32,7 +32,7 @@ pipeline{
             }
         }
         
-        stage('Pushing to ECR') {
+        stage('Image Publish') {
             steps{  
                 script {
                     sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 975072647018.dkr.ecr.ap-south-1.amazonaws.com'
@@ -45,15 +45,10 @@ pipeline{
             steps {
                 sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
                 sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
-            }
-        }
-      
-        stage('Docker Run') {
-            steps{
                 script {
                     sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:latest'
                 }
             }
-        }
+        }      
     }
 }

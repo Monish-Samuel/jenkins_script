@@ -55,13 +55,15 @@ pipeline{
             }
         }
     }
-		post {
-			success {
-				mail to: 'samuelmonish1@gmail.com',
-				subject: "Successful Pipeline: ${currentBuild.fullDisplayName}",
-				body: "Pipeline ${env.BUILD_URL} is Successful"
-			}
+	post {
+		always {
+            		echo 'EMAIL GENERATED'
+            
+            		emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                	recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                	subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
 		}
+	}
 	
 }
 

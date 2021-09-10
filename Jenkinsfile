@@ -30,9 +30,8 @@ pipeline{
         
        stage('Code Analysis'){
             steps{
-//                 sh 'chmod +x ./code_analysis/analysis.sh'
-//                 sh './code_analysis/analysis.sh && exit'
-                sh 'pylint src/output.py --reports=y'
+                sh 'chmod +x ./code_analysis/analysis.sh'
+                sh './code_analysis/analysis.sh && exit'
 
             }
         }        

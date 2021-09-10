@@ -54,7 +54,8 @@ pipeline{
                 }
             }
         }
-			
+    }
+				
 		post {
 			failure {
 				mail to: 'samuelmonish1@gmail.com',
@@ -69,6 +70,5 @@ pipeline{
 				body: "Pipeline ${env.BUILD_URL} is Successful"
 			}
 		}
-    }
 }
 

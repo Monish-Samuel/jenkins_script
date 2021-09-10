@@ -55,15 +55,6 @@ pipeline{
             }
         }
     }
-	try{		
-		post {
-			failure {
-				mail to: 'samuelmonish1@gmail.com',
-				subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-				body: "Something is wrong with ${env.BUILD_URL}"
-			}
-		}
-	}catch(Exception e){
 		post {
 			success {
 				mail to: 'samuelmonish1@gmail.com',
@@ -71,6 +62,6 @@ pipeline{
 				body: "Pipeline ${env.BUILD_URL} is Successful"
 			}
 		}
-	}
+	
 }
 

@@ -12,9 +12,7 @@ agent any
 			def file= powershell returnStdout: true, script: './build_number.ps1'
 			def buildNumber= powershell (returnStdout: true, script: 'Get-Content ./buildNo.txt').trim()
 			currentBuild.displayName = "${buildNumber}"
-			value= "${buildNumber}"
-			print value
-			env.build_no= value
+			env.build_no= "${buildNumber}"
 		}
 	    }	
 	}

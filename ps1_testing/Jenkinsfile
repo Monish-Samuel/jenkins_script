@@ -13,7 +13,7 @@ agent any
 	}
 	    stage('Check'){
 		    steps{
-			    echo "The build number is ${env.BUILD_DISPLAY_NAME}"
+			    echo "${env.BUILD_DISPLAY_NAME}"
 		    }
 	    }
     }

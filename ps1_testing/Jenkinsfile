@@ -1,0 +1,20 @@
+pipeline{
+    agent any
+    
+    environment{
+
+    }
+    
+    stages{
+        stage('Source_Code_Checkout'){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/powershell_testing.git']]])
+            }
+        }
+        stage('Build Number Check'){
+			      steps{
+				        powershell 'Write-Host "The build number is ${BUILD_NUMBER}"'
+			      }
+		    }    
+    }
+}

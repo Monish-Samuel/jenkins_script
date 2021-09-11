@@ -21,7 +21,6 @@ agent any
 		    steps{
 			    rtUpload (   
    				 serverId: 'generic-libs-prod',
-				    captureEnv: 'true',
     					spec: '''{
           					"files": [
             						{
@@ -37,7 +36,6 @@ agent any
 		    steps{
 			    rtDownload (
    				 serverId: 'generic-libs-prod',
-				    captureEnv: 'true',
     					spec: '''{
           					"files": [
             						{
@@ -47,6 +45,9 @@ agent any
           					]
    					 }''',
 				)
+		    }
+		    script{
+		    powershell './build_scripts/zip_clear.ps1'
 		    }
 	    }
     }

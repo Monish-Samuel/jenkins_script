@@ -29,7 +29,7 @@ agent any
            				 		}
           					]
    					 }''',
-				    buildNumber: '${env.buildNo}',
+				    buildNumber: '${env.BUILD_NUMBER}',
 				)
 		    }
 	    }
@@ -45,7 +45,7 @@ agent any
            				 		}
           					]
    					 }''',
-				    buildNumber: '${env.buildNo}',
+				    buildNumber: '${env.BUILD_NUMBER}',
 				)
 		    }
 	    }

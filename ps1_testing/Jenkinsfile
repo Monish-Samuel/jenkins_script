@@ -19,10 +19,9 @@ pipeline{
             }
         }
         stage('Build Number Check'){
-			      steps{
-				      
-				      echo ${buildNo}
-			      }
-		    }    
+		steps{				      
+			bat 'echo ${buildNo}'
+		}
+	}    
     }
 }

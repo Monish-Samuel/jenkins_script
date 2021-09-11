@@ -8,8 +8,7 @@ pipeline{
         }
         stage('Build Number Check'){
 		steps{	
-			powershell '$BUILD_NUMBER= $env:BUILD_NUMBER'
-			powershell 'Write-Host $BUILD_NUMBER'
+			echo "The build number is ${env.BUILD_NUMBER}"
 		}	
 	}    
     }

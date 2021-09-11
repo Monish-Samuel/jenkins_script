@@ -30,13 +30,13 @@ agent any
           					]
    					 }''',
 				    buildName: 'Flask-App',
-				    buildNumber: $buildNo,
+				    buildNumber: buildNo,
 				)
 			    			    
 			rtPublishBuildInfo (
     				serverId: 'generic-libs-prod',
 				buildName: 'Flask-App',
-				buildNumber: $buildNo,
+				buildNumber: buildNo,
 			)
 		    }
 	    }
@@ -53,7 +53,7 @@ agent any
           					]
    					 }''',
 				    buildName: 'Flask-App',
-				    buildNumber: $buildNo,
+				    buildNumber: buildNo,
 				)
 		    }
 	    }

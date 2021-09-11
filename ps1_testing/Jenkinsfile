@@ -1,8 +1,5 @@
 pipeline{
     agent any 
-	environment{
-		value=${BUILD_NUMBER}
-	}
     stages{
         stage('Source_Code_Checkout'){
             steps{
@@ -11,6 +8,7 @@ pipeline{
         }
         stage('Build Number Check'){
 		steps{	
+			value= ${BUILD_NUMBER}
 			echo '${value}'
 			powershell 'Write-Host The build number is $value'
 		}	

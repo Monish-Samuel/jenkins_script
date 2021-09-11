@@ -15,13 +15,13 @@ parameters {
 			def file= powershell returnStdout: true, script: './build_number.ps1'
 			def buildNumber= powershell (returnStdout: true, script: 'Get-Content ./buildNo.txt').trim()
 			currentBuild.displayName = "${buildNumber}"
-			env.build_no= buildNumber
+			env.BUILD_NUMBER= buildNumber
 		}
 	    }	
 	}
 	    stage('Global Check'){
 		    steps{
-		    echo '${env.build_no}'
+		    echo '${env.BUILD_NUMBER}'
 		    }
 	    }
     }

@@ -29,8 +29,6 @@ agent any
            				 		}
           					]
    					 }''',
-   				 buildName: 'holyFrog',
-   				 buildNumber: '42',
 				)
 		    }
 	    }

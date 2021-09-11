@@ -1,26 +1,15 @@
 pipeline{
 agent any
     stages{
-        stage('Source_Code_Checkout'){
+        stage('Pre-Flight Checks'){
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/powershell_testing.git']]])
-            }
-        }
-        stage('Build Number Check'){
-		steps{	
 			script{
 			def file= powershell returnStdout: true, script: './build_number.ps1'
 			def buildNumber= powershell (returnStdout: true, script: 'Get-Content ./buildNo.txt').trim()
 			currentBuild.displayName = "${buildNumber}"
-			env.buildNo= powershell (returnStdout: true, script: 'Get-Content ./buildNo.txt').trim()
-				print "${env.buildNo}"
 		}
 	    }	
 	}
-	    stage('Global Check'){
-		    steps{
-		    echo '${env.buildNo}'
-		    }
-	    }
     }
 }

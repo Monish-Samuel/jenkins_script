@@ -45,9 +45,9 @@ agent any
           					]
    					 }''',
 				)
-		    }
-		    script{
+		script{
 		    powershell './build_scripts/zip_clear.ps1'
+		    }
 		    }
 	    }
     }

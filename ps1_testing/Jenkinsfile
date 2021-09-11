@@ -21,7 +21,7 @@ agent any
 		    steps{
 			    rtUpload (   
    				 serverId: 'generic-libs-prod',
-				    captureEnv: true,
+				    captureEnv: 'true',
     					spec: '''{
           					"files": [
             						{
@@ -30,7 +30,6 @@ agent any
            				 		}
           					]
    					 }''',
-				    buildNumber: '${env.BUILD_NUMBER}',
 				)
 		    }
 	    }
@@ -38,7 +37,7 @@ agent any
 		    steps{
 			    rtDownload (
    				 serverId: 'generic-libs-prod',
-				    captureEnv: true,
+				    captureEnv: 'true',
     					spec: '''{
           					"files": [
             						{
@@ -47,7 +46,6 @@ agent any
            				 		}
           					]
    					 }''',
-				    buildNumber: '${env.BUILD_NUMBER}',
 				)
 		    }
 	    }

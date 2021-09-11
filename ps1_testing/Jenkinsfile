@@ -43,7 +43,7 @@ agent any
           					"files": [
             						{
               						"pattern": "generic-libs-prod/*-'${env.buildNo}'.zip",
-             						 "target": "./"
+             						 "target": "./artifacts/"
            				 		}
           					]
    					 }''',

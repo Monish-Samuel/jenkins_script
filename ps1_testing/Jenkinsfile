@@ -9,11 +9,10 @@ pipeline{
         stage('Build Number Check'){
 		steps{	
 			script{
-			value= ${env.BUILD_NUMBER}
-			echo '${value}'
-			powershell 'Write-Host The build number is $value'
-			}
-		}	
+			powershell './build_number.ps1'
+			currentBuild.displayName = $buildNo
+		}
+	    }	
 	}    
     }
 }

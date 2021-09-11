@@ -36,24 +36,20 @@ agent any
 				)
 		    }
 	    }
-// 	    stage('Artifact-Download'){
-// 		    steps{
-// 			    rtDownload (
-//    				 serverId: 'generic-libs-prod',
-//     					spec: '''{
-//           					"files": [
-//             						{
-//               						"pattern": "generic-libs-prod/*.zip",
-//              						 "target": "./"
-//            				 		}
-//           					]
-//    					 }''',
-// 				)
-// 		    }
-// 	    }
 	    stage('Artifact-Download'){
 		    steps{
-		    	powershell './build_scripts/artifact_download.ps1'
+			    rtDownload (
+   				 serverId: 'generic-libs-prod',
+    					spec: '''{
+          					"files": [
+            						{
+              						"pattern": "generic-libs-prod/*.zip",
+             						 "target": "./"
+           				 		}
+          					]
+   					 }''',
+				    buildNumber: '95'
+				)
 		    }
 	    }
     }

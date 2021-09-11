@@ -39,7 +39,7 @@ agent any
     					spec: '''{
           					"files": [
             						{
-              						"pattern": "generic-libs-prod/*.zip",
+              						"pattern": "generic-libs-prod/*-${env.buildNo}.zip",
              						 "target": "./"
            				 		}
           					]

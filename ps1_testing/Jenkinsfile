@@ -3,14 +3,7 @@ def major
 def minor
 def patch
 def buildNo
-node{
-	props = readProperties file: 'build.properties'
-	major= props['MAJOR_VERSION']
-	minor= props['MINOR_VERSION']
-	patch= props['PATCH_VERSION']
-	buildNo= major+"."+minor+"."+patch
-	bat 'echo ${buildNo}'
-}
+
 pipeline{
     agent any 
     stages{
@@ -20,7 +13,12 @@ pipeline{
             }
         }
         stage('Build Number Check'){
-		steps{				      
+		steps{	
+			props = readProperties file: 'build.properties'
+			major= props['MAJOR_VERSION']
+			minor= props['MINOR_VERSION']
+			patch= props['PATCH_VERSION']
+			buildNo= major+"."+minor+"."+patch
 			bat 'echo ${buildNo}'
 		}
 	}    

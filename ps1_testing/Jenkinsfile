@@ -19,17 +19,19 @@ agent any
 	    }
 	    stage('Build-Management'){
 		    steps{
-			    script{
-			    	def uploadSpec = """{
-  					"files": [
-    						{
-     						 "pattern": "source-repo/*.zip",
-      						"target": "flaskapp/"
-   						 }
- 					]
-				}"""
-				server.upload spec: uploadSpec
-			    }
+			    rtDownload (
+   				 serverId: 'generic-libs-prod',
+    					spec: '''{
+          					"files": [
+            						{
+              						"pattern": "source-repo/*.zip",
+             						 "target": "bazinga/"
+           				 		}
+          					]
+   					 }''',
+   				 buildName: 'holyFrog',
+   				 buildNumber: '42',
+				)
 		    }
 	    }
     }

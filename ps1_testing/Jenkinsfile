@@ -15,7 +15,7 @@ pipeline{
         stage('Build Number Check'){
 		steps{	
 			script{
-			props = readProperties file: 'build.properties'
+			props = readProperties file: './build.properties'
 			major= props['MAJOR_VERSION']
 			minor= props['MINOR_VERSION']
 			patch= props['PATCH_VERSION']

@@ -1,5 +1,8 @@
 pipeline{
 agent any
+parameters {
+            string(name: 'build_no', defaultValue: '')
+        }
     stages{
         stage('Source_Code_Checkout'){
             steps{
@@ -12,15 +15,13 @@ agent any
 			def file= powershell returnStdout: true, script: './build_number.ps1'
 			def buildNumber= powershell (returnStdout: true, script: 'Get-Content ./buildNo.txt').trim()
 			currentBuild.displayName = "${buildNumber}"
+			env.build_no= buildNumber
 		}
-			environment{
-				build_no= ${buildNumber}
-			}
 	    }	
 	}
 	    stage('Global Check'){
 		    steps{
-		    echo '${build_no}'
+		    echo '${env.build_no}'
 		    }
 	    }
     }

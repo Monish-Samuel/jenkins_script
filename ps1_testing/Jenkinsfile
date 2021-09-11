@@ -30,13 +30,15 @@ agent any
           					]
    					 }''',
 				)
+			    			    
+			rtPublishBuildInfo (
+    				serverId: 'generic-libs-prod',
+
+			)
 		    }
 	    }
 	    stage('Artifact-Download'){
 		    steps{
-			    rtBuildInfo (
-                    			captureEnv: true
-                		)
 			    rtDownload (
    				 serverId: 'generic-libs-prod',
     					spec: '''{

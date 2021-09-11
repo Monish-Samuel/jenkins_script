@@ -1,9 +1,5 @@
 pipeline{
 agent any
-	environment{
-		JFROG_USERNAME= credentials('jfrog-user-id')
-		JFROG_PASSWORD= credentials('jfrog-password')
-	}
     stages{
         stage('Pre-Flight Checks'){
             steps{
@@ -33,7 +29,6 @@ agent any
            				 		}
           					]
    					 }''',
-				    buildNumber: '96'
 				)
 		    }
 	    }
@@ -44,12 +39,11 @@ agent any
     					spec: '''{
           					"files": [
             						{
-              						"pattern": "generic-libs-prod/*.zip",
+              						"pattern": "generic-libs-prod/app-1.0.1.97.zip",
              						 "target": "./"
            				 		}
           					]
    					 }''',
-				    buildNumber: '96'
 				)
 		    }
 	    }

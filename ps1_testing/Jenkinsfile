@@ -12,7 +12,7 @@ pipeline{
         stage('Build Number Check'){
 		steps{	
 			echo '${value}'
-			powershell 'Write-Host The build number is $BUILD_NUMBER'
+			powershell 'Write-Host The build number is $value'
 		}	
 	}    
     }

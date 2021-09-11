@@ -9,7 +9,7 @@ pipeline{
         stage('Build Number Check'){
 		steps{	
 			script{
-			powershell './build_number.ps1'
+			env.Result= powershell(returnStdout: true, script:build_number.ps1)
 			currentBuild.displayName = $buildNo
 		}
 	    }	

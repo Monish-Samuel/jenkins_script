@@ -19,8 +19,8 @@ pipeline{
 			major= props['MAJOR_VERSION']
 			minor= props['MINOR_VERSION']
 			patch= props['PATCH_VERSION']
-			buildNo= major+"."+minor+"."+patch
-			powershell 'Write-Host "${buildNo}"'
+			powershell '$buildNo= major+"."+minor+"."+patch'
+			powershell 'Write-Host $buildNo'
 		}
 		}	
 	}    

@@ -20,6 +20,7 @@ agent any
 	    stage('Build-Management'){
 		    steps{
 			    rtUpload (
+				 captureEnv: true,   
    				 serverId: 'generic-libs-prod',
     					spec: '''{
           					"files": [
@@ -36,11 +37,12 @@ agent any
 	    stage('Artifact-Download'){
 		    steps{
 			    rtDownload (
+				 captureEnv: true,
    				 serverId: 'generic-libs-prod',
     					spec: '''{
           					"files": [
             						{
-              						"pattern": "generic-libs-prod/*.zip",
+              						"pattern": "generic-libs-prod/*-'${env.buildNo}'.zip",
              						 "target": "./"
            				 		}
           					]

@@ -1,7 +1,7 @@
 pipeline{
     agent any 
 	environment{
-		BUILD_VERSION= ${env.BUILD_NUMBER}
+		BUILD_VERSION= '${env.BUILD_NUMBER}'
 	}
     stages{
         stage('Source_Code_Checkout'){

@@ -16,7 +16,9 @@ agent any
 	    }	
 	}
 	    stage('Global Check'){
+		    steps{
 		    echo '${buildNumber}'
+		    }
 	    }
     }
 }

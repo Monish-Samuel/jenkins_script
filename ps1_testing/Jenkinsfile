@@ -25,7 +25,7 @@ agent any
           					"files": [
             						{
               						"pattern": "./source-repo/*.zip",
-             						 "target": "bazinga/"
+             						 "target": "generic-libs-prod/"
            				 		}
           					]
    					 }''',

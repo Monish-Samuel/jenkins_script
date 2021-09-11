@@ -1,9 +1,3 @@
-def props
-def major
-def minor
-def patch
-def buildNo
-
 pipeline{
     agent any 
     stages{
@@ -14,14 +8,7 @@ pipeline{
         }
         stage('Build Number Check'){
 		steps{	
-			script{
-			props = readProperties file: './build.properties'
-			major= props['MAJOR_VERSION']
-			minor= props['MINOR_VERSION']
-			patch= props['PATCH_VERSION']
-			powershell '$buildNo= major+"."+minor+"."+patch'
-			powershell 'Write-Host $buildNo'
-		}
+			powershell 'Write-Host $BUILD_NUMBER'
 		}	
 	}    
     }

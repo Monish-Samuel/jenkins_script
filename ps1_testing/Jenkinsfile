@@ -1,5 +1,5 @@
 pipeline{
-    agent any 
+agent {label 'windows'}
     stages{
         stage('Source_Code_Checkout'){
             steps{
@@ -9,8 +9,10 @@ pipeline{
         stage('Build Number Check'){
 		steps{	
 			script{
-			powershell './build_number.ps1'
-			currentBuild.displayName = $buildNo
+			def file= powershell returnStdout: true, script: './build_number.ps1'
+			def buildNumber= powershell returnStdout: true, script: 'Get-Content ./buildNo.txt'
+				print buildNumber.trim()
+				currentBuild.displayName = "${buildNumber}"
 		}
 	    }	
 	}    

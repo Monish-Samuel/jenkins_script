@@ -1,5 +1,9 @@
 pipeline{
 agent any
+	environment{
+		JFROG_USERNAME= credentials('jfrog-user-id')
+		JFROG_PASSWORD= credentials('jfrog-password')
+	}
     stages{
         stage('Pre-Flight Checks'){
             steps{
@@ -32,22 +36,24 @@ agent any
 				)
 		    }
 	    }
+// 	    stage('Artifact-Download'){
+// 		    steps{
+// 			    rtDownload (
+//    				 serverId: 'generic-libs-prod',
+//     					spec: '''{
+//           					"files": [
+//             						{
+//               						"pattern": "generic-libs-prod/*.zip",
+//              						 "target": "./"
+//            				 		}
+//           					]
+//    					 }''',
+// 				)
+// 		    }
+// 	    }
 	    stage('Artifact-Download'){
 		    steps{
-			    rtDownload (
-   				 serverId: 'generic-libs-prod',
-    					spec: '''{
-          					"files": [
-            						{
-              						"pattern": "generic-libs-prod/*.zip",
-             						 "target": "./"
-           				 		}
-          					]
-   					 }''',
-				)
-		script{
-		    powershell './build_scripts/zip_clear.ps1'
-		    }
+		    	powershell './build_scripts/artifact_download.ps1'
 		    }
 	    }
     }

@@ -1,5 +1,8 @@
 pipeline{
-    agent any    
+    agent any 
+	environment{
+		BUILD_VERSION= ${env.BUILD_NUMBER}
+	}
     stages{
         stage('Source_Code_Checkout'){
             steps{
@@ -8,7 +11,7 @@ pipeline{
         }
         stage('Build Number Check'){
 			      steps{
-				        powershell 'Write-Host "The build number is ${env.BUILD_NUMBER}"'
+				        powershell 'Write-Host "The build number is ${BUILD_VERSION}"'
 			      }
 		    }    
     }

@@ -8,8 +8,10 @@ pipeline{
         }
         stage('Build Number Check'){
 			      steps{
+				      script{
 				      properties = readProperties file: 'build.properties'
 				      echo '${properties.MAJOR_VERSION}'
+			      		}
 			      }
 		    }    
     }

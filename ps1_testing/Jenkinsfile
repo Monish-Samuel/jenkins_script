@@ -34,12 +34,15 @@ agent any
 	    }
 	    stage('Artifact-Download'){
 		    steps{
+			    rtBuildInfo (
+                    			captureEnv: true
+                		)
 			    rtDownload (
    				 serverId: 'generic-libs-prod',
     					spec: '''{
           					"files": [
             						{
-              						"pattern": "generic-libs-prod/app-1.0.1.97.zip",
+              						"pattern": "generic-libs-prod/*-'${env.buildNo}'.zip",
              						 "target": "./"
            				 		}
           					]

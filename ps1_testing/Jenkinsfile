@@ -11,5 +11,10 @@ agent any
 		}
 	    }	
 	}
+	    stage('Check'){
+		    steps{
+			    echo '${env.BUILD_DISPLAY_NAME}'
+		    }
+	    }
     }
 }

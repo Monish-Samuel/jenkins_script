@@ -19,7 +19,7 @@ agent any
 	    }
 	    stage('Build-Management'){
 		    steps{
-			    rtDownload (
+			    rtUpload (
    				 serverId: 'generic-libs-prod',
     					spec: '''{
           					"files": [

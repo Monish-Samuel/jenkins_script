@@ -1,3 +1,15 @@
+def props
+def major
+def minor
+def patch
+def buildNo
+node{
+	props = readProperties file: 'build.properties'
+	major= props['MAJOR_VERSION']
+	minor= props['MINOR_VERSION']
+	patch= props['PATCH_VERSION']
+	buildNo= major+"."+minor+"."+patch
+}
 pipeline{
     agent any 
     stages{
@@ -8,10 +20,8 @@ pipeline{
         }
         stage('Build Number Check'){
 			      steps{
-				      script{
-				      properties = readProperties file: 'build.properties'
-				      echo '${properties.MAJOR_VERSION}'
-			      		}
+				      
+				      echo ${buildNo}
 			      }
 		    }    
     }

@@ -34,7 +34,7 @@ agent any
 			    			    
 			rtPublishBuildInfo (
     				serverId: 'generic-libs-prod',
-
+				buildName: 'Flask-App',
 			)
 		    }
 	    }
@@ -50,6 +50,7 @@ agent any
            				 		}
           					]
    					 }''',
+				    buildName: 'Flask-App',
 				)
 		    }
 	    }

@@ -29,6 +29,7 @@ agent any
            				 		}
           					]
    					 }''',
+				    buildName: 'Flask-App',
 				)
 			    			    
 			rtPublishBuildInfo (

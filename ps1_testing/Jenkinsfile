@@ -17,5 +17,21 @@ agent any
 			    powershell './build_scripts/zip_creation.ps1'
 		    }
 	    }
+	    stage('Build-Management'){
+		    steps{
+			    rtUpload (
+    				serverId: 'generic-libs-prod',
+    				spec: '''{
+          				"files": [
+            					{
+              						"pattern": "temp/*.zip",
+              						"target": "webapp/source-code/"
+            					}
+         				]
+    				}''',
+			buildName: 'flaskapp',
+			)
+		    }
+	    }
     }
 }

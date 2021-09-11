@@ -10,16 +10,17 @@ agent any
 		steps{	
 			script{
 			def file= powershell returnStdout: true, script: './build_number.ps1'
-			def buildNumber= powershell returnStdout: true, script: 'Get-Content ./buildNo.txt'
+			def buildNumber= powershell (returnStdout: true, script: 'Get-Content ./buildNo.txt').trim()
 			currentBuild.displayName = "${buildNumber}"
-			print buildNumber
-			env.BUILD_NO= buildNumber
+			value= "${buildNumber}"
+			print value
+			env.build_no= value
 		}
 	    }	
 	}
 	    stage('Global Check'){
 		    steps{
-		    echo '${env.BUILD_NO}'
+		    echo '${env.build_no}'
 		    }
 	    }
     }

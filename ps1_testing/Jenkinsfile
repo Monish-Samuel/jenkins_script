@@ -20,7 +20,7 @@ pipeline{
 			minor= props['MINOR_VERSION']
 			patch= props['PATCH_VERSION']
 			buildNo= major+"."+minor+"."+patch
-			bat 'echo ${buildNo}'
+			powershell 'Write-Host "${buildNo}"'
 		}
 		}	
 	}    

@@ -33,6 +33,7 @@ agent any
            				 		}
           					]
    					 }''',
+				    buildNumber: '96'
 				)
 		    }
 	    }
@@ -48,7 +49,7 @@ agent any
            				 		}
           					]
    					 }''',
-				    buildNumber: '95'
+				    buildNumber: '96'
 				)
 		    }
 	    }

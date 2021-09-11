@@ -12,9 +12,9 @@ agent any
 		}
 	    }	
 	}
-	    stage('Check'){
+	    stage('Build-Automation'){
 		    steps{
-			    echo "${env.buildNo}"
+			    powershell './build_scripts/zip_creation.ps1'
 		    }
 	    }
     }

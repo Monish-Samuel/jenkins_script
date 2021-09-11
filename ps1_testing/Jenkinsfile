@@ -24,7 +24,7 @@ agent any
     					spec: '''{
           					"files": [
             						{
-              						"pattern": "./source-repo/*.zip",
+              						"pattern": "./source-repo/app-$buildNo.zip",
              						 "target": "generic-libs-prod/"
            				 		}
           					]
@@ -47,7 +47,7 @@ agent any
     					spec: '''{
           					"files": [
             						{
-              						"pattern": "generic-libs-prod/*.zip",
+              						"pattern": "generic-libs-prod/app-$buildNo.zip",
              						 "target": "./artifacts/"
            				 		}
           					]

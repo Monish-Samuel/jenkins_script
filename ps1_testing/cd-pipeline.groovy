@@ -8,13 +8,13 @@ agent any
     					spec: '''{
           					"files": [
             						{
-              						"pattern": "generic-libs-prod/app-$buildNo.zip",
+              						"pattern": "generic-libs-prod/app-$buildVersion.zip",
              						 "target": "./artifacts/"
            				 		}
           					]
    					 }''',
 				    buildName: 'Flask-App',
-				    buildNumber: buildNo,
+				    buildNumber: buildVersion,
 				)
 		    }
 	    }

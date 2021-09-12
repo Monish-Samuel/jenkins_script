@@ -17,6 +17,11 @@ agent any
 			    powershell './build_scripts/zip_creation.ps1'
 		    }
 	    }
+	    stage('Code Analysis'){
+		    steps{
+			    powershell './code_analysis/analysis.ps1'
+		    }
+	    }
 	    stage('Build-Management'){
 		    steps{
 			    rtUpload (   

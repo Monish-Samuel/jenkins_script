@@ -5,7 +5,7 @@ agent any
 		    steps{
 			    powershell 'Get-ChildItem -Path ".\" -Directory -Filter "artifacts" | Remove-Item -Recurse -Confirm:$false -Force'
 			    powershell '$value= $env:buildVersion'
-			    powershell 'Write-Host "Requested Artifact to Download :app-$value.zip"'
+			    powershell 'Write-Host "Requested Artifact to Download :app-'$value'.zip"'
 			    rtDownload (
    				 serverId: 'generic-libs-prod',
     					spec: '''{

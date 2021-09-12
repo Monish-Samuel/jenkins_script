@@ -5,7 +5,7 @@ agent any
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/powershell_testing.git']]])
 			script{
-			def file= powershell returnStdout: true, script: './build_scripts/build_number.ps1'
+			def file= powershell returnStdout: true, script: './build_scripts/build_prep.ps1'
 			def buildNumber= powershell (returnStdout: true, script: 'Get-Content ./buildNo.txt').trim()
 			currentBuild.displayName = "${buildNumber}"
 			env.buildNo= buildNumber

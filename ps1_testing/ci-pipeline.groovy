@@ -9,6 +9,8 @@ agent any
 			def buildNumber= powershell (returnStdout: true, script: 'Get-Content ./buildNo.txt').trim()
 			currentBuild.displayName = "${buildNumber}"
 			env.buildNo= buildNumber
+			def buildbranch= powershell (returnStdout: true, script: 'Get-Content ./buildbranch.txt').trim()
+			currentBuild.description= "${buildbranch}"
 		}
 	    }	
 	}

@@ -3,6 +3,9 @@ agent any
     stages{	    
       stage('Artifact-Download'){
 		    steps{
+			    powershell 'Get-ChildItem -Path ".\" -Directory -Filter "artifacts" | Remove-Item -Recurse -Confirm:$false -Force'
+			    powershell '$value= $env:buildVersion'
+			    powershell 'Write-Host "Requested Artifact to Download app-$vaalue.zip"'
 			    rtDownload (
    				 serverId: 'generic-libs-prod',
     					spec: '''{

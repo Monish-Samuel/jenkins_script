@@ -3,9 +3,8 @@ agent any
     stages{	    
       stage('Artifact-Download'){
 		    steps{
+			    //Initial Clean up of folder before downloading artifact
 			    powershell 'Get-ChildItem -Path ".\" -Directory -Filter "artifacts" | Remove-Item -Recurse -Confirm:$false -Force'
-			    powershell '$value= $env:buildVersion'
-			    powershell 'Write-Host "Requested Artifact to Download :app-$value.zip"'
 			    rtDownload (
    				 serverId: 'generic-libs-prod',
     					spec: '''{

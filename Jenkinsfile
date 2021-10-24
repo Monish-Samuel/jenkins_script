@@ -28,13 +28,13 @@ pipeline{
             }
         }
         
-//        stage('Code Analysis'){
-//             steps{
-//                 sh 'chmod +x ./code_analysis/analysis.sh'
-//                 sh './code_analysis/analysis.sh && exit'
+       stage('Code Analysis'){
+            steps{
+                sh 'chmod +x ./code_analysis/analysis.sh'
+                sh './code_analysis/analysis.sh && exit'
 
-//             }
-//         }        
+            }
+        }        
         
         stage('Image Publish') {
             steps{  

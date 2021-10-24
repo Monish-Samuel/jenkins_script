@@ -40,7 +40,7 @@ pipeline{
             steps{  
                 script {
                     sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin ${AWS_ECR_REPO}'
-                    sh 'docker tag latest ${AWS_CREDS_REPO}:${BUILD_NUMBER}'
+                    sh 'docker tag ${AWS_CREDS_REPO}:${BUILD_NUMBER}'
                     sh 'docker push ${AWS_CREDS_REPO}:${BUILD_NUMBER}'
                 }
             }

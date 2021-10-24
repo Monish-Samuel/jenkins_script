@@ -40,7 +40,7 @@ pipeline{
             steps{  
                 script {
                     sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin ${AWS_ECR_REPO}'
-                    sh 'docker push ${AWS_CREDS_REPO}:latest'
+                    sh 'docker push ${AWS_CREDS_REPO}:${env.BUILD_NUMBER}'
                 }
             }
         }
@@ -50,7 +50,7 @@ pipeline{
                 sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
                 sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
                 script {
-                    sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer ${AWS_CREDS_REPO}:latest'
+                    sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer ${AWS_CREDS_REPO}:${env.BUILD_NUMBER}'
                 }
             }
         }

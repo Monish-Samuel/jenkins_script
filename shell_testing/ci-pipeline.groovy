@@ -9,6 +9,7 @@ agent any
 			def Var1= props['MAJOR_VERSION']
 			def Var2= props['MINOR_VERSION'] 
 			echo "${Var1}"
+		    }
 	    }	
 	}
 	    stage('Build-Automation'){

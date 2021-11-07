@@ -12,12 +12,12 @@ agent any
 			    sh './build_scripts/zip_creation.sh'
 		    }
 	    }
-	    stage('Code Analysis'){
-		    steps{
-			    sh "chmod +x -R ${env.WORKSPACE}"
-			    sh './code_analysis/analysis.sh'    
-		    }
-	    }
+// 	    stage('Code Analysis'){
+// 		    steps{
+// 			    sh "chmod +x -R ${env.WORKSPACE}"
+// 			    sh './code_analysis/analysis.sh'    
+// 		    }
+// 	    }
 	    stage('Build-Management'){
 		    steps{
 			    rtUpload (   

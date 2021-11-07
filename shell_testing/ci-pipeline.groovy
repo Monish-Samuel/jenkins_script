@@ -4,7 +4,11 @@ agent any
         stage('Pre-Flight Checks'){
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/shell_testing.git']]])
-		    
+		    script{
+		    	def props = readProperties  file:'/var/lib/jenkins/workspace/shell_testing/ci-pipeline/build.properties'
+			def Var1= props['MAJOR_VERSION']
+			def Var2= props['MINOR_VERSION'] 
+			echo "${Var1}"
 	    }	
 	}
 	    stage('Build-Automation'){

@@ -8,21 +8,14 @@ agent any
 	}
 	    stage('Build-Automation'){
 		    steps{
-			    sh
-			    '''
-			    	DIR="*.zip"
-				if [ find . -name "*.zip" -type f ]; then
-				echo "Deleting old zip file"
-				find . -name "*.zip" -type f -delete
-				fi
-			    '''
-			    sh 'zip -r myapp-$BUILD_NUMBER.zip src'
+			    sh "chmod +x -R ${env.WORKSPACE}"
+			    sh './build_scripts/zip_creation.sh'
 		    }
 	    }
 	    stage('Code Analysis'){
 		    steps{
 			    sh "chmod +x -R ${env.WORKSPACE}"
-			    sh './code_analysis/analysis.sh'
+			    sh './code_analysis/analysis.sh'    
 		    }
 	    }
 	    stage('Build-Management'){

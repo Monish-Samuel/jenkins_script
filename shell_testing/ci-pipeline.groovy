@@ -17,41 +17,41 @@ agent any
 		    }
 	    }	
 	}
-// 	    stage('Build-Automation'){
-// 		    steps{
-// 			    sh "chmod +x -R ${env.WORKSPACE}"
-// 			    sh './build_scripts/zip_creation.sh'
-// 		    }
-// 	    }
-// 	    stage('Code Analysis'){
-// 		    steps{
-// 			    //sh "chmod +x -R ${env.WORKSPACE}"
-// 			    sh './code_analysis/analysis.sh'    
-// 		    }
-// 	    }
-// 	    stage('Build-Management'){
-// 		    steps{
-// 			    rtUpload (   
-//    				 serverId: 'zip-libs-prod',
-//     					spec: '''{
-//           					"files": [
-//             						{
-//               						"pattern": "./myapp-$buildNo.zip",
-//              						 "target": "zip-libs-prod/"
-//            				 		}
-//           					]
-//    					 }''',
-// 				    buildName: 'Flask-App',
-// 				    buildNumber: buildNo,
-// 				)
+	    stage('Build-Automation'){
+		    steps{
+			    sh "chmod +x -R ${env.WORKSPACE}"
+			    sh './build_scripts/zip_creation.sh'
+		    }
+	    }
+	    stage('Code Analysis'){
+		    steps{
+			    //sh "chmod +x -R ${env.WORKSPACE}"
+			    sh './code_analysis/analysis.sh'    
+		    }
+	    }
+	    stage('Build-Management'){
+		    steps{
+			    rtUpload (   
+   				 serverId: 'zip-libs-prod',
+    					spec: '''{
+          					"files": [
+            						{
+              						"pattern": "./myapp-$buildNo.zip",
+             						 "target": "zip-libs-prod/"
+           				 		}
+          					]
+   					 }''',
+				    buildName: 'Flask-App',
+				    buildNumber: buildNo,
+				)
 			    			    
-// 			rtPublishBuildInfo (
-//     				serverId: 'zip-libs-prod',
-// 				buildName: 'Flask-App',
-// 				buildNumber: buildNo,
-// 			)
-// 		    }
-// 	    }
+			rtPublishBuildInfo (
+    				serverId: 'zip-libs-prod',
+				buildName: 'Flask-App',
+				buildNumber: buildNo,
+			)
+		    }
+	    }
 // 	    stage('Deployment'){
 // 		    steps{
 // 	    		build job: 'ps1_testing/cd-pipeline', parameters: [

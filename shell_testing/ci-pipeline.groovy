@@ -13,6 +13,7 @@ agent any
 	    }
 	    stage('Code Analysis'){
 		    steps{
+			    sh "chmod +x -R ${env.WORKSPACE}"
 			    sh './code_analysis/analysis.sh'
 		    }
 	    }

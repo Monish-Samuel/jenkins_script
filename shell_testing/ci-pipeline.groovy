@@ -9,6 +9,7 @@ agent any
 			    File propsFile = new File('/build.properties')
 			    props.load(propsFile.newDataInputStream())
 			    println props.getProperty('MAJOR_VERSION')
+		    }
 	    }	
 	}
 	    stage('Build-Automation'){

@@ -11,7 +11,7 @@ agent any
           					"files": [
             						{
               						"pattern": "zip-libs-prod/myapp-$buildVersion.zip",
-             						 "target": "."
+             						 "target": ""
            				 		}
           					]
    					 }''',

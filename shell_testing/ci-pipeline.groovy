@@ -10,7 +10,7 @@ agent any
 			def minorver= props['MINOR_VERSION']
 			def patchver= props['PATCH_VERSION']    
 			def gitbranch= props['BRANCH_NAME']
-			    def buildNumber= ${majorver} + "-" + ${majorver} + "-" + ${majorver} + "-" + ${env.BUILD_NUMBER}
+			    def buildNumber= majorver + "-" + minorver + "-" + patchver + "-" + BUILD_NUMBER
 			    echo "${buildNumber}"
 		    }
 	    }	

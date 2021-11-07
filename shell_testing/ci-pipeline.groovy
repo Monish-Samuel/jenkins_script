@@ -4,14 +4,7 @@ agent any
         stage('Pre-Flight Checks'){
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/shell_testing.git']]])
-		    script{
-			    def dir= ${env.WORKSPACE}
-			    println ${dir}
-			    Properties props = new Properties()
-			    File propsFile = new File('/$dir/build.properties')
-			    props.load(propsFile.newDataInputStream())
-			    println props.getProperty('MAJOR_VERSION')
-		    }
+		    
 	    }	
 	}
 	    stage('Build-Automation'){

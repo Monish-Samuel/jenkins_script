@@ -52,12 +52,12 @@ agent any
 			)
 		    }
 	    }
-// 	    stage('Deployment'){
-// 		    steps{
-// 	    		build job: 'ps1_testing/cd-pipeline', parameters: [
-// 				string(name: 'buildVersion', value: buildNo)
-//                 ]
-// 		    }
-// 	    }
+	    stage('Deployment'){
+		    steps{
+	    		build job: 'shell_testing/cd-pipeline', parameters: [
+				string(name: 'buildVersion', value: buildNo)
+                ]
+		    }
+	    }
     }
 }

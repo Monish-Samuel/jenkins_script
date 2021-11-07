@@ -6,7 +6,7 @@ agent any
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/shell_testing.git']]])
 		    script{
 			    Properties props = new Properties()
-			    File propsFile = new File('/${WORKSPACE}/build.properties')
+			    File propsFile = new File('build.properties')
 			    props.load(propsFile.newDataInputStream())
 			    println props.getProperty('MAJOR_VERSION')
 		    }

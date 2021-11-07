@@ -6,6 +6,7 @@ agent any
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/shell_testing.git']]])
 		    script{
 			    def dir= ${env.WORKSPACE}
+			    println "$dir"
 			    Properties props = new Properties()
 			    File propsFile = new File('/$dir/build.properties')
 			    props.load(propsFile.newDataInputStream())

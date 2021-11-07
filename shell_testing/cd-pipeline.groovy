@@ -22,7 +22,8 @@ agent any
 	    }
       stage ('Unzipping Artiffact'){
         steps{
-        sh 'unzip myapp-$buildVersion.zip'
+		sh "chmod +x -R ${env.WORKSPACE}"
+		sh './build_scripts/unzip_deploy.sh'
         }
       }
     }

@@ -8,7 +8,15 @@ agent any
 	}
 	    stage('Build-Automation'){
 		    steps{
-			    sh 'zip myapp-$BUILD_NUMBER.zip ./src'
+			    sh
+			    '''
+			    	DIR="*.zip"
+				if [ find . -name "*.zip" -type f ]; then
+				echo "Deleting old zip file"
+				find . -name "*.zip" -type f -delete
+				fi
+			    '''
+			    sh 'zip -r myapp-$BUILD_NUMBER.zip src'
 		    }
 	    }
 	    stage('Code Analysis'){

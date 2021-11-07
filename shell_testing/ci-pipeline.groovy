@@ -35,7 +35,7 @@ agent any
 				)
 			    			    
 			rtPublishBuildInfo (
-    				serverId: 'generic-libs-prod',
+    				serverId: 'zip-libs-prod',
 				buildName: 'Flask-App',
 				buildNumber: BUILD_NUMBER,
 			)

@@ -25,7 +25,7 @@ agent any
     					spec: '''{
           					"files": [
             						{
-              						"pattern": "./source-repo/app-$BUILD_NUMBER.zip",
+              						"pattern": "./myapp-$BUILD_NUMBER.zip",
              						 "target": "zip-libs-prod/"
            				 		}
           					]

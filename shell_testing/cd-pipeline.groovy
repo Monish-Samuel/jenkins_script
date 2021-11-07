@@ -4,6 +4,7 @@ agent any
       stage('Artifact-Download'){
 		    steps{
 			    //Initial Clean up of folder before downloading artifact
+			    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/shell_testing.git']]])
 			    sh 'find . -name "*.zip" -type f -delete'
 			    rtDownload (
    				 serverId: 'zip-libs-prod',

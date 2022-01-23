@@ -44,7 +44,11 @@ agent any
             						{
               						"pattern": "./source-repo/app-$buildNo.zip",
              						 "target": "generic-libs-prod/"
-           				 		}
+           				 		},
+							{
+							"pattern": "Dockerfile",
+             						 "target": "generic-libs-prod/"
+							}
           					]
    					 }''',
 				    buildName: 'Flask-App',

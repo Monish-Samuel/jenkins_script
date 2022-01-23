@@ -28,7 +28,7 @@ agent any
 	    	    stage('SonarQube analysis') {
     			steps {
     				withSonarQubeEnv('jenkins_sonarqube') {
-        			powershell'''
+        			bat'''
          				-Dsonar.projectKey=projectKey \
          				-Dsonar.projectName=projectName \
          				-Dsonar.sources=src/ \

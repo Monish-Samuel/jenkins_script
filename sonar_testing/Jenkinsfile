@@ -11,6 +11,7 @@ agent any
 			env.buildNo= buildNumber
 			def buildbranch= powershell (returnStdout: true, script: 'Get-Content ./buildbranch.txt').trim()
 			currentBuild.description= "${buildbranch}"
+			env.buildbranch= buildbranch	
 		}
 	    }	
 	}
@@ -24,20 +25,20 @@ agent any
 // 			    powershell './code_analysis/analysis.ps1'
 // 		    }
 // 	    }
-	    // 	    stage('SonarQube analysis') {
-//     		environment {
-//       			SCANNER_HOME = tool 'Sonar-scanner'
-//    		 }
-//     		steps {
-//     			withSonarQubeEnv(credentialsId: 'sonar-credentialsId', installationName: 'Sonar') {
-//         		powershell'''$SCANNER_HOME/bin/sonar-scanner \
-//          		-Dsonar.projectKey=projectKey \
-//          		-Dsonar.projectName=projectName \
-//          		-Dsonar.sources=src/ \
-//          		-Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}'''
-//        			}
-//      		}
-// 	}
+	    	    stage('SonarQube analysis') {
+    		environment {
+      			SCANNER_HOME = tool 'Sonar-scanner'
+   		 }
+    		steps {
+    			withSonarQubeEnv(credentialsId: 'sonar-credentialsId', installationName: 'Sonar') {
+        		powershell'''$SCANNER_HOME/bin/sonar-scanner \
+         		-Dsonar.projectKey=projectKey \
+         		-Dsonar.projectName=projectName \
+         		-Dsonar.sources=src/ \
+         		-Dsonar.projectVersion=${buildNo}-${buildbranch}'''
+       			}
+     		}
+	}
    	stage('SQuality Gate') {
      		steps {
        			timeout(time: 1, unit: 'MINUTES') {

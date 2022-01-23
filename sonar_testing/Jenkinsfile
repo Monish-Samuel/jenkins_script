@@ -27,14 +27,12 @@ agent any
 // 	    }
 	    	    stage('SonarQube analysis') {
     			steps {
-    				withSonarQubeEnv('jenkins_sonarqube') {
-        			bat'''
-         				-Dsonar.projectKey="Testing"^
-         				-Dsonar.projectName="projectTesting"^
-         				-Dsonar.sources=src/^
-         				-Dsonar.projectVersion="$env:buildNo-$en:buildbranch"
-					'''
-       			}
+    				script {
+            				def SONARSCANNER = tool "sonar-scanner";
+            				withSonarQubeEnv("jenkins_sonarqube") {
+                 			bat "${SONARSCANNER}/sonar-scanner-3.2.0.1227/bin/sonar-scanner.bat"
+         			}
+    			}
      		}
 	}
    	stage('SQuality Gate') {

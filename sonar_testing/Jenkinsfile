@@ -65,7 +65,7 @@ agent any
 	    }
 	    stage('Image Scan'){
 		    steps{
-		    	bat 'docker scan flask-app'
+		    	bat 'docker scan --file Dockerfile flask-app:latest'
 		    }
 	    }
 	    stage('ECR Image Push'){

@@ -63,6 +63,11 @@ agent any
 		    	bat 'docker build -t flask-app .'
 		    }
 	    }
+	    stage('Image Scan'){
+		    steps{
+		    	bat 'docker scan flask-app'
+		    }
+	    }
 	    stage('ECR Image Push'){
 		    steps{
 		    	bat 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 975072647018.dkr.ecr.ap-south-1.amazonaws.com'

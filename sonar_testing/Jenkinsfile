@@ -65,8 +65,7 @@ agent any
 	    }
 	    stage('Build-Image'){
 		    steps{
-		    	bat 'docker build -t flask-app .'
-			bat 'docker tag flask-app:latest flask-app:${buildNo}'
+			    bat 'docker build -t flask-app:${buildNo} .'
 		    }
 	    }
 	    stage('Start-Image'){

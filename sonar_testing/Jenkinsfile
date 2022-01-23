@@ -70,7 +70,7 @@ agent any
 	    }
 	    stage('Start-Image'){
 		    steps{
-			    bat 'docker ps -f name=stringCalculation -q | docker --no-run-if-empty container stop'
+			    bat 'docker ps -f name=stringCalculation -q | docker container stop'
 			    bat 'docker container ls -a -fname=stringCalculation -q | docker -r container rm'
 			    script{
 			    	powershell 'docker run -d -p 8996:5000 --rm --name stringCalculation flask-app:\$env:buildNo'

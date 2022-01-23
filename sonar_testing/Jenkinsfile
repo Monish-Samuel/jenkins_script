@@ -27,10 +27,10 @@ agent any
 // 	    }
 	    	    stage('SonarQube analysis') {
     		environment {
-      			SCANNER_HOME = tool 'Sonar-scanner'
+      			SCANNER_HOME = tool 'Sonar_Scanner'
    		 }
     		steps {
-    			withSonarQubeEnv(credentialsId: 'sonar-credentialsId', installationName: 'Sonar') {
+    			withSonarQubeEnv(credentialsId: 'jenkins_sonarqube', installationName: 'Sonar') {
         		powershell'''$SCANNER_HOME/bin/sonar-scanner \
          		-Dsonar.projectKey=projectKey \
          		-Dsonar.projectName=projectName \

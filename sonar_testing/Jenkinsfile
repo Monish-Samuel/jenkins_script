@@ -47,5 +47,26 @@ agent any
 			)
 		    }
 	    }
+// 	    stage('SonarQube analysis') {
+//     		environment {
+//       			SCANNER_HOME = tool 'Sonar-scanner'
+//    		 }
+//     		steps {
+//     			withSonarQubeEnv(credentialsId: 'sonar-credentialsId', installationName: 'Sonar') {
+//         		powershell'''$SCANNER_HOME/bin/sonar-scanner \
+//          		-Dsonar.projectKey=projectKey \
+//          		-Dsonar.projectName=projectName \
+//          		-Dsonar.sources=src/ \
+//          		-Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}'''
+//        			}
+//      		}
+// 	}
+   	stage('SQuality Gate') {
+     		steps {
+       			timeout(time: 1, unit: 'MINUTES') {
+       			waitForQualityGate abortPipeline: true
+       		}
+  	}
+	}
     }
 }

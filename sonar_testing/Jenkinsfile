@@ -71,8 +71,7 @@ agent any
 	    stage('ECR Image Push'){
 		    steps{
 			withDockerRegistry([url: "https://975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo",credentialsId: "Docker-AWS-Integration"]){
-				bat 'docker tag flask-app:latest 975072647018.dkr.ecr.ap-south-1.amazonaws.com/flask-app:${buildNo}' 
-				bat 'docker push 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}' 
+				echo 'login succedded'
 			}
 		    }
 	    }

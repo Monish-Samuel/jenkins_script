@@ -65,7 +65,7 @@ agent any
 // 	    }
 	    stage('Build-Image'){
 		    steps{
-			    bat 'docker build -t flask-app:${env.BUILD_NUMBER} .'
+			    bat 'docker build -t flask-app:${env:BUILD_NUMBER} .'
 		    }
 	    }
 	    stage('Start-Image'){
@@ -73,7 +73,7 @@ agent any
 			    bat 'docker ps -f name=stringCalculation -q | xargs --no-run-if-empty docker container stop'
 			    bat 'docker container ls -a -fname=stringCalculation -q | xargs -r docker container rm'
 			    script{
-			    	bat 'docker run -d -p 8996:5000 --rm --name stringCalculation flask-app:${env.BUILD_NUMBER}'
+			    	bat 'docker run -d -p 8996:5000 --rm --name stringCalculation flask-app:${env:BUILD_NUMBER}'
 			    }
 		    }
 	    }

@@ -29,10 +29,10 @@ agent any
     			steps {
     				withSonarQubeEnv('jenkins_sonarqube') {
         			bat'''
-         				-Dsonar.projectKey=projectKey \
-         				-Dsonar.projectName=projectName \
-         				-Dsonar.sources=src/ \
-         				-Dsonar.projectVersion=${buildNo}-${buildbranch}
+         				-Dsonar.projectKey="Testing"^
+         				-Dsonar.projectName="projectTesting"^
+         				-Dsonar.sources=src/^
+         				-Dsonar.projectVersion="$env:buildNo-$en:buildbranch"
 					'''
        			}
      		}

@@ -16,53 +16,53 @@ agent any
 		}
 	    }	
 	}
-// 	    stage('Build-Automation'){
-// 		    steps{
-// 			    powershell './build_scripts/zip_creation.ps1'
-// 		    }
-// 	    }
-// 	    stage('SonarQube analysis') {
-//     			steps {
-//     				script {
-//             				def SONARSCANNER = tool "sonar-scanner";
-//             				withSonarQubeEnv("jenkins_sonarqube") {
-//                  			bat "${SONARSCANNER}/bin/sonar-scanner.bat"
-//          			}
-//     			}
-//      		}
-// 	}
-//    	stage("Quality Gate") {
-//             steps {
-//                 timeout(time: 1, unit: 'MINUTES') {
-//                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
-//                     // true = set pipeline to UNSTABLE, false = don't
-//                     waitForQualityGate abortPipeline: true
-//                 }
-//             }
-//         }
-// 	    stage('Build-Management'){
-// 		    steps{
-// 			    rtUpload (   
-//    				 serverId: 'generic-libs-prod',
-//     					spec: '''{
-//           					"files": [
-//             						{
-//               						"pattern": "./source-repo/app-$buildNo.zip",
-//              						 "target": "generic-libs-prod/"
-//            				 		}
-//           					]
-//    					 }''',
-// 				    buildName: 'Flask-App',
-// 				    buildNumber: buildNo,
-// 				)
+	    stage('Build-Automation'){
+		    steps{
+			    powershell './build_scripts/zip_creation.ps1'
+		    }
+	    }
+	    stage('SonarQube analysis') {
+    			steps {
+    				script {
+            				def SONARSCANNER = tool "sonar-scanner";
+            				withSonarQubeEnv("jenkins_sonarqube") {
+                 			bat "${SONARSCANNER}/bin/sonar-scanner.bat"
+         			}
+    			}
+     		}
+	}
+   	stage("Quality Gate") {
+            steps {
+                timeout(time: 1, unit: 'MINUTES') {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+	    stage('Build-Management'){
+		    steps{
+			    rtUpload (   
+   				 serverId: 'generic-libs-prod',
+    					spec: '''{
+          					"files": [
+            						{
+              						"pattern": "./source-repo/app-$buildNo.zip",
+             						 "target": "generic-libs-prod/"
+           				 		}
+          					]
+   					 }''',
+				    buildName: 'Flask-App',
+				    buildNumber: buildNo,
+				)
 			    			    
-// 			rtPublishBuildInfo (
-//     				serverId: 'generic-libs-prod',
-// 				buildName: 'Flask-App',
-// 				buildNumber: buildNo,
-// 			)
-// 		    }
-// 	    }
+			rtPublishBuildInfo (
+    				serverId: 'generic-libs-prod',
+				buildName: 'Flask-App',
+				buildNumber: buildNo,
+			)
+		    }
+	    }
 	    stage('Build-Image'){
 		    steps{
 			    powershell 'docker build -t flask-app:\$env:buildNo .'

@@ -67,14 +67,14 @@ environment{
 // 			)
 // 		    }
 // 	    }
-	    stage('Build-Image'){
-		    steps{
-		    	bat 'docker build -t flask-app .'
-		    }
-	    }
+// 	    stage('Build-Image'){
+// 		    steps{
+// 		    	bat 'docker build -t flask-app .'
+// 		    }
+// 	    }
 	    stage('ECR Image Push'){
 		    steps{
-			powershell '(Get-ECRLoginCommand).Password | docker login --username AWS --password-stdin 975072647018.dkr.ecr.ap-south-1.amazonaws.com'
+			bat 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 975072647018.dkr.ecr.ap-south-1.amazonaws.com'
 			bat 'docker tag flask-app:latest 975072647018.dkr.ecr.ap-south-1.amazonaws.com/flask-app:${buildNo}' 
 			bat 'docker push 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}'    
 		    }

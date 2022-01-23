@@ -24,30 +24,7 @@ agent any
 			    powershell './code_analysis/analysis.ps1'
 		    }
 	    }
-	    stage('Build-Management'){
-		    steps{
-			    rtUpload (   
-   				 serverId: 'generic-libs-prod',
-    					spec: '''{
-          					"files": [
-            						{
-              						"pattern": "./source-repo/app-$buildNo.zip",
-             						 "target": "generic-libs-prod/"
-           				 		}
-          					]
-   					 }''',
-				    buildName: 'Flask-App',
-				    buildNumber: buildNo,
-				)
-			    			    
-			rtPublishBuildInfo (
-    				serverId: 'generic-libs-prod',
-				buildName: 'Flask-App',
-				buildNumber: buildNo,
-			)
-		    }
-	    }
-// 	    stage('SonarQube analysis') {
+	    // 	    stage('SonarQube analysis') {
 //     		environment {
 //       			SCANNER_HOME = tool 'Sonar-scanner'
 //    		 }
@@ -68,5 +45,29 @@ agent any
        		}
   	}
 	}
+// 	    stage('Build-Management'){
+// 		    steps{
+// 			    rtUpload (   
+//    				 serverId: 'generic-libs-prod',
+//     					spec: '''{
+//           					"files": [
+//             						{
+//               						"pattern": "./source-repo/app-$buildNo.zip",
+//              						 "target": "generic-libs-prod/"
+//            				 		}
+//           					]
+//    					 }''',
+// 				    buildName: 'Flask-App',
+// 				    buildNumber: buildNo,
+// 				)
+			    			    
+// 			rtPublishBuildInfo (
+//     				serverId: 'generic-libs-prod',
+// 				buildName: 'Flask-App',
+// 				buildNumber: buildNo,
+// 			)
+// 		    }
+// 	    }
+
     }
 }

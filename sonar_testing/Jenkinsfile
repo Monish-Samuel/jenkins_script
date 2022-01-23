@@ -26,17 +26,15 @@ agent any
 // 		    }
 // 	    }
 	    	    stage('SonarQube analysis') {
-    		environment {
-      			SCANNER_HOME = tool 'Sonar_Scanner'
-   		 }
-    		steps {
-    			withSonarQubeEnv(credentialsId: 'jenkins_sonarqube', installationName: 'Sonar') {
-        		powershell'''
-         		-Dsonar.projectKey=projectKey \
-         		-Dsonar.projectName=projectName \
-         		-Dsonar.sources=src/ \
-         		-Dsonar.projectVersion=${buildNo}-${buildbranch}
-			'''
+    			steps {
+    				withSonarQubeEnv() {
+        			powershell
+					'''
+         				-Dsonar.projectKey=projectKey \
+         				-Dsonar.projectName=projectName \
+         				-Dsonar.sources=src/ \
+         				-Dsonar.projectVersion=${buildNo}-${buildbranch}
+					'''
        			}
      		}
 	}

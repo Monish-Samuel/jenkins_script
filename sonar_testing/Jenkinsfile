@@ -21,60 +21,61 @@ agent any
 			    powershell './build_scripts/zip_creation.ps1'
 		    }
 	    }
-// 	    stage('SonarQube analysis') {
-//     			steps {
-//     				script {
-//             				def SONARSCANNER = tool "sonar-scanner";
-//             				withSonarQubeEnv("jenkins_sonarqube") {
-//                  			bat "${SONARSCANNER}/bin/sonar-scanner.bat"
-//          			}
-//     			}
-//      		}
-// 	}
-//    	stage("Quality Gate") {
-//             steps {
-//                 timeout(time: 1, unit: 'MINUTES') {
-//                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
-//                     // true = set pipeline to UNSTABLE, false = don't
-//                     waitForQualityGate abortPipeline: true
-//                 }
-//             }
-//         }
-// 	    stage('Build-Management'){
-// 		    steps{
-// 			    rtUpload (   
-//    				 serverId: 'generic-libs-prod',
-//     					spec: '''{
-//           					"files": [
-//             						{
-//               						"pattern": "./source-repo/app-$buildNo.zip",
-//              						 "target": "generic-libs-prod/"
-//            				 		}
-//           					]
-//    					 }''',
-// 				    buildName: 'Flask-App',
-// 				    buildNumber: buildNo,
-// 				)
-			    			    
-// 			rtPublishBuildInfo (
-//     				serverId: 'generic-libs-prod',
-// 				buildName: 'Flask-App',
-// 				buildNumber: buildNo,
-// 			)
-// 		    }
-// 	    }
-// 	    stage('Build-Image'){
-// 		    steps{
-// 		    	bat 'docker build -t flask-app .'
-// 		    }
-// 	    }
-	    stage('ECR Image Push'){
+	    stage('SonarQube analysis') {
+    			steps {
+    				script {
+            				def SONARSCANNER = tool "sonar-scanner";
+            				withSonarQubeEnv("jenkins_sonarqube") {
+                 			bat "${SONARSCANNER}/bin/sonar-scanner.bat"
+         			}
+    			}
+     		}
+	}
+   	stage("Quality Gate") {
+            steps {
+                timeout(time: 1, unit: 'MINUTES') {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+	    stage('Build-Management'){
 		    steps{
-			withDockerRegistry([url: "https://975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo",credentialsId: "Docker-AWS-Integration"]){
-				script{
-					echo 'login succedded'
-				}
-			}
+			    rtUpload (   
+   				 serverId: 'generic-libs-prod',
+    					spec: '''{
+          					"files": [
+            						{
+              						"pattern": "./source-repo/app-$buildNo.zip",
+             						 "target": "generic-libs-prod/"
+           				 		}
+          					]
+   					 }''',
+				    buildName: 'Flask-App',
+				    buildNumber: buildNo,
+				)
+			    			    
+			rtPublishBuildInfo (
+    				serverId: 'generic-libs-prod',
+				buildName: 'Flask-App',
+				buildNumber: buildNo,
+			)
+		    }
+	    }
+	    stage('Build-Image'){
+		    steps{
+		    	bat 'docker build -t flask-app .'
+			bat 'docker tag flask-app:latest flask-app:${buildNo}'
+		    }
+	    }
+	    stage('Start-Image'){
+		    steps{
+			    bat 'docker ps -f name=stringCalculation -q | xargs --no-run-if-empty docker container stop'
+			    bat 'docker container ls -a -fname=stringCalculation -q | xargs -r docker container rm'
+			    script{
+			    	bat 'docker run -d -p 8996:5000 --rm --name stringCalculation flask-app:${buildNo}'
+			    }
 		    }
 	    }
     }

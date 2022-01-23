@@ -19,11 +19,11 @@ agent any
 			    powershell './build_scripts/zip_creation.ps1'
 		    }
 	    }
-	    stage('Code Analysis'){
-		    steps{
-			    powershell './code_analysis/analysis.ps1'
-		    }
-	    }
+// 	    stage('Code Analysis'){
+// 		    steps{
+// 			    powershell './code_analysis/analysis.ps1'
+// 		    }
+// 	    }
 	    // 	    stage('SonarQube analysis') {
 //     		environment {
 //       			SCANNER_HOME = tool 'Sonar-scanner'

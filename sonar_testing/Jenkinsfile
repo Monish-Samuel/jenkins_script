@@ -30,7 +30,7 @@ agent any
     				script {
             				def SONARSCANNER = tool "sonar-scanner";
             				withSonarQubeEnv("jenkins_sonarqube") {
-                 			bat "${SONARSCANNER}/sonar-scanner-4.6.2.2472/bin/sonar-scanner.bat"
+                 			bat "${SONARSCANNER}/bin/sonar-scanner.bat"
          			}
     			}
      		}

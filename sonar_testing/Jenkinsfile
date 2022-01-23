@@ -70,8 +70,8 @@ agent any
 	    }
 	    stage('Start-Image'){
 		    steps{
-			    bat 'docker stop $(docker ps –a –q)'
-			    bat 'docker rm $(docker ps --filter status=exited -q)'
+			    powershell 'docker stop $(docker ps –a –q)'
+			    powershell 'docker rm $(docker ps --filter status=exited -q)'
 			    script{
 			    	powershell 'docker run -d -p 8996:5000 --rm --name stringCalculation flask-app:\$env:buildNo'
 			    }

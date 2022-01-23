@@ -31,11 +31,12 @@ agent any
    		 }
     		steps {
     			withSonarQubeEnv(credentialsId: 'jenkins_sonarqube', installationName: 'Sonar') {
-        		powershell'''$SCANNER_HOME/bin/sonar-scanner \
+        		powershell'''
          		-Dsonar.projectKey=projectKey \
          		-Dsonar.projectName=projectName \
          		-Dsonar.sources=src/ \
-         		-Dsonar.projectVersion=${buildNo}-${buildbranch}'''
+         		-Dsonar.projectVersion=${buildNo}-${buildbranch}
+			'''
        			}
      		}
 	}

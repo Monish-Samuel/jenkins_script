@@ -53,14 +53,13 @@ def execute(){
 	}
 	stage('Move Package to EC2'){
 		
-		withCredentials([string(credentialsId: 'server-key', variable: 'myPrivateKey')]){
+		withCredentials([file(credentialsId: 'india-server.pem', variable: 'my_private_key')]){
 			sh "mv ${env.WORKSPACE}/shell_testing/myapp-${buildNo}.zip ${env.WORKSPACE}/shell_testing/myapp.zip"
-			data= env.myPrivateKey;
-			writeFile file:'server.pem', text: data;
+			writeFile file: 'private.pem', text: readFile(my_private_key);
 			sh 'cat server.pem'
-			sh "ssh -i server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com"
-	        	sh "ssh -i server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com [ -e myapp.zip ] && rm -- myapp.zip"
-			sh "scp -i server.pem myapp.zip ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com:/"	
+			sh "ssh -i private.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com"
+	        	sh "ssh -i private.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com [ -e myapp.zip ] && rm -- myapp.zip"
+			sh "scp -i private.pem myapp.zip ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com:/"	
 		}
 	}
   

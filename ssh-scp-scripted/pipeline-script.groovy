@@ -3,7 +3,7 @@ node{
     def execute()
   }catch(Exception e){
     throw e;
-    println (Error executing pipeline)
+    println ("Error executing pipeline")
   }
 }
 

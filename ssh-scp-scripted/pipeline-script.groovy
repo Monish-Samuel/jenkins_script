@@ -53,7 +53,7 @@ def execute(){
 	}
 	stage('Move Package to EC2'){
 		
-		withCredentials([string(credentialsId: 'server-key', variable: myPrivateKey)]){
+		withCredentials([string(credentialsId: 'server-key', variable: 'myPrivateKey')]){
 			sh "mv ${env.WORKSPACE}/shell_testing/myapp-${buildNo}.zip ${env.WORKSPACE}/shell_testing/myapp.zip"
 			data= env.myPrivateKey;
 			writeFile file:'server.pem', text: data;

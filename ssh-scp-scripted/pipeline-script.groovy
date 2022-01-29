@@ -15,7 +15,6 @@ def execute(){
   def gitBranch= 'master';
   
   stage("Clone-Repo"){
-    println (gitBranch);
     cloneRepo(gitBranch);
   }
   
@@ -26,6 +25,6 @@ def execute(){
 
 def cloneRepo(branchName){
   withCredentials([string(credentialsId: 'commit_git_token', variable: 'TOKEN')]){
-    sh 'git clone -b ${branchName} https://${TOKEN}@https://github.com/Monish-Samuel/shell_testing'
+    sh 'git clone -b $branchName https://${TOKEN}@https://github.com/Monish-Samuel/shell_testing'
   }
 }

@@ -6,7 +6,7 @@ node{
     println ("Error executing pipeline")
   }
   finally{
-    deleteDir();
+    cleanWs();
   }
 }
 
@@ -18,18 +18,4 @@ execute(){
   stage("Test"){
     echo 'Test 2 completed'
   }
-}
-
-def deleteDir(){
-  post {
-        // Clean after build
-        always {
-            cleanWs(cleanWhenNotBuilt: false,
-                    deleteDirs: true,
-                    disableDeferredWipeout: true,
-                    notFailBuild: true,
-                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
-                               [pattern: '.propsfile', type: 'EXCLUDE']])
-        }
-    }
 }

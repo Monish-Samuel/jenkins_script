@@ -19,6 +19,7 @@ def execute(){
   def minorver= props['MINOR_VERSION']
   def patchver= props['PATCH_VERSION']    
   def gitbranch= props['BRANCH_NAME']
+  def serverIP= props['SERVER_IP']
   def data;
   def buildNumber= majorver + "." + minorver + "." + patchver + "." + BUILD_NUMBER
   currentBuild.displayName = "${buildNumber}"
@@ -29,6 +30,15 @@ def execute(){
 		sh "chmod +x -R ${env.WORKSPACE}"
 		sh "${env.WORKSPACE}/shell_testing/build_scripts/zip_creation.sh"
 	    }
+	
+	stage('Sonar Quality and Gate'){
+		def SONARSCANNER = tool "sonar-scanner";
+            	withSonarQubeEnv("sonar") {
+              	sh "${SONARSCANNER}/bin/sonar-scanner.sh"
+		timeout(time: 1, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }	
+	}
 	
 	stage('Build-Management'){
 		rtUpload (   
@@ -51,35 +61,37 @@ def execute(){
 				buildNumber: buildNo,
 			)
 	}
+		
 	stage('Move Package to EC2'){
 		
 		withCredentials([file(credentialsId: 'india-server.pem', variable: 'my_private_key')]){
 			sh "mv ${env.WORKSPACE}/shell_testing/myapp-${buildNo}.zip ${env.WORKSPACE}/shell_testing/myapp.zip"
 			writeFile file: "${env.WORKSPACE}/india-server.pem", text: readFile(my_private_key);
 			sh "chmod 400 ${env.WORKSPACE}/india-server.pem";
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com"
-	        	sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com '[ -e myapp.zip ] && rm -- myapp.zip'"
-			sh "scp -i ${env.WORKSPACE}/india-server.pem -r ${env.WORKSPACE}/shell_testing/myapp.zip ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com:~/"	
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP}"
+	        	sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} '[ -e myapp.zip ] && rm -- myapp.zip'"
+			sh "scp -i ${env.WORKSPACE}/india-server.pem -r ${env.WORKSPACE}/shell_testing/myapp.zip ec2-user@${serverIP}:~/"	
 		}
 	}
+		
 	stage('Build and Deploy image'){
 			// create folder and unzip
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com '[ -e flask-app ] | rm -r flask-app'"
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'mkdir flask-app'"
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'unzip myapp.zip -d flask-app'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} '[ -e flask-app ] | rm -r flask-app'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'mkdir flask-app'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'unzip myapp.zip -d flask-app'"
 			
 			// build docker image
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'cd flask-app && docker build -t flask-app .'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'cd flask-app && docker build -t flask-app .'"
 			
 			// tag image and push to ecr
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 975072647018.dkr.ecr.ap-south-1.amazonaws.com'"
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker tag flask-app:latest 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}'"
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker push 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 975072647018.dkr.ecr.ap-south-1.amazonaws.com'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'docker tag flask-app:latest 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'docker push 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}'"
 		
 			// run the container
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'"
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'"
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker run -d -p 8096:5000 --rm --name mypythonContainer 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'docker run -d -p 8096:5000 --rm --name mypythonContainer 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}'"
 	}
   
 }

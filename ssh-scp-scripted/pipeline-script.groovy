@@ -57,9 +57,9 @@ def execute(){
 			sh "mv ${env.WORKSPACE}/shell_testing/myapp-${buildNo}.zip ${env.WORKSPACE}/shell_testing/myapp.zip"
 			sh 'cd .. && ls -lRt'
 			writeFile file: '${env.WORKSPACE}/india-server.pem', text: readFile(my_private_key);
-			sh "ssh -i ${env.WORKSPACE}/india-server.pem -t ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com"
-	        	sh "ssh -i ${env.WORKSPACE}/india-server.pem -t ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com [ -e myapp.zip ] && rm -- myapp.zip"
-			sh "scp -i ${env.WORKSPACE}/india-server.pem myapp.zip -t ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com:/"	
+			sh "ssh -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com"
+	        	sh "ssh -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com [ -e myapp.zip ] && rm -- myapp.zip"
+			sh "scp -i ${env.WORKSPACE}/india-server.pem myapp.zip ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com:/"	
 		}
 	}
   

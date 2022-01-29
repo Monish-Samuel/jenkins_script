@@ -28,6 +28,28 @@ def execute(){
 		sh "chmod +x -R ${env.WORKSPACE}"
 		sh "${env.WORKSPACE}/shell_testing/build_scripts/zip_creation.sh"
 	    }
+	
+	stage('Build-Management'){
+		rtUpload (   
+   				 serverId: 'generic-libs-prod',
+    					spec: '''{
+          					"files": [
+            						{
+              						"pattern": "./myapp-$buildNo.zip",
+             						 "target": "generic-libs-prod/"
+           				 		}
+          					]
+   					 }''',
+				    buildName: 'Flask-App',
+				    buildNumber: buildNo,
+				)
+			    			    
+			rtPublishBuildInfo (
+    				serverId: 'generic-libs-prod',
+				buildName: 'Flask-App',
+				buildNumber: buildNo,
+			)
+	}
   
 }
 

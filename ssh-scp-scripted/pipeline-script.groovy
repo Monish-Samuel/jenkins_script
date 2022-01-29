@@ -12,20 +12,26 @@ node{
 
 def execute(){
   
-  def gitBranch= 'master';
+  def propsFile= 'shell_testing/build.properties'
+  env.WORKSPACE= pwd()
+  def props = readProperties  file:${env.WORKSPACE}/propsFile
+	def majorver= props['MAJOR_VERSION']
+	def minorver= props['MINOR_VERSION']
+	def patchver= props['PATCH_VERSION']    
+	def gitbranch= props['BRANCH_NAME']
+	def buildNumber= majorver + "." + minorver + "." + patchver + "." + BUILD_NUMBER
+	currentBuild.displayName = "${buildNumber}"
+	currentBuild.description= "${gitbranch}"
+	env.buildNo= buildNumber
   
   stage("Clone-Repo"){
     try{
-      cloneRepo(gitBranch);
+      cloneRepo(gitbranch);
       println ("Cloned repo successfully")
     }catch(Exception e){
       println ("Error Cloning Repo")
       throw e;
     }
-  }
-  
-  stage("Test"){
-    echo 'Test 2 completed'
   }
 }
 

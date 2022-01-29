@@ -6,7 +6,7 @@ node{
     println ("Error executing pipeline")
   }
   finally{
-    cleanWs();
+    //cleanWs();
   }
 }
 

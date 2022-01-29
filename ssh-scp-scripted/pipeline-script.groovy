@@ -6,7 +6,7 @@ node{
     throw e;
   }
   finally{
-    //cleanWs();
+    cleanWs();
   }
 }
 

@@ -14,7 +14,7 @@ def execute(){
   
   def propsFile= 'shell_testing/build.properties'
   env.WORKSPACE= pwd()
-  def props = readProperties  file:${env.WORKSPACE}/propsFile
+  def props = readProperties  file:propsFile
 	def majorver= props['MAJOR_VERSION']
 	def minorver= props['MINOR_VERSION']
 	def patchver= props['PATCH_VERSION']    

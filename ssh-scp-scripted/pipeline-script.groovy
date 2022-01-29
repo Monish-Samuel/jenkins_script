@@ -10,12 +10,18 @@ node{
   }
 }
 
-execute(){
-  stage("Test"){
-    echo 'Test 1 completed'
+def execute(){
+  stage("Clone-Repo"){
+    cloneRepo('master');
   }
   
   stage("Test"){
     echo 'Test 2 completed'
+  }
+}
+
+def cloneRepo(branchName){
+  withCredentials([string(credentialsId: 'commit_git_token', variable: 'TOKEN')]){
+    sh 'git clone -b ${branchName} https://${TOKEN}@https://github.com/Monish-Samuel/shell_testing'
   }
 }

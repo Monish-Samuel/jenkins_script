@@ -63,7 +63,7 @@ def execute(){
 		}
 	}
 	stage('Build and Deploy image'){
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com '[ -e flask-app ] | rmdir -r flask-app'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com '[ -e flask-app ] | rm -r flask-app'"
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'mkdir flask-app'"
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'unzip myapp.zip -d flask-app'"
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'cd flask-app && docker build -t flask-app .'"

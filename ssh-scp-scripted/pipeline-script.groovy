@@ -2,8 +2,8 @@ node{
   try{
    execute();
   }catch(Exception e){
+    println ("Error executing pipeline");
     throw e;
-    println ("Error executing pipeline")
   }
   finally{
     //cleanWs();
@@ -12,10 +12,16 @@ node{
 
 def execute(){
   
-  def gitBranch= 'master';
+  def gitBranch= 'm';
   
   stage("Clone-Repo"){
-    cloneRepo(gitBranch);
+    try{
+      cloneRepo(gitBranch);
+      println ("Cloned repo successfully")
+    }catch(Exception e){
+      println ("Error Cloning Repo")
+      throw e;
+    }
   }
   
   stage("Test"){

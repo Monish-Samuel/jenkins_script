@@ -73,13 +73,13 @@ def execute(){
 			
 			// tag image and push to ecr
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 975072647018.dkr.ecr.ap-south-1.amazonaws.com'"
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker tag flask-app:latest 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${BUILD_NUMBER}'"
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker push 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${BUILD_NUMBER}'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker tag flask-app:latest 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker push 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}'"
 		
 			// run the container
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'"
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'"
-			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker run -d -p 8096:5000 --rm --name mypythonContainer 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${BUILD_NUMBER}'"
+			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'docker run -d -p 8096:5000 --rm --name mypythonContainer 975072647018.dkr.ecr.ap-south-1.amazonaws.com/demo-repo:${buildNo}'"
 	}
   
 }

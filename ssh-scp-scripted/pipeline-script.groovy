@@ -59,7 +59,7 @@ def execute(){
 			sh "chmod 400 ${env.WORKSPACE}/india-server.pem";
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com 'ls -lRt'"
 	        	sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com [ -e myapp.zip ] && rm -- myapp.zip"
-			sh "scp -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem -r ${env.WORKSPACE}/shell_testing/myapp.zip ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com:~/"	
+			sh "scp -i ${env.WORKSPACE}/india-server.pem -r ${env.WORKSPACE}/shell_testing/myapp.zip ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com:~/"	
 		}
 	}
   

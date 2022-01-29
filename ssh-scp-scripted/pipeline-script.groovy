@@ -56,7 +56,7 @@ def execute(){
 		withCredentials([file(credentialsId: 'india-server.pem', variable: 'my_private_key')]){
 			sh "mv ${env.WORKSPACE}/shell_testing/myapp-${buildNo}.zip ${env.WORKSPACE}/shell_testing/myapp.zip"
 			sh 'cd .. && ls -lRt'
-			writeFile file: '${env.WORKSPACE}/india-server.pem', text: readFile(my_private_key);
+			writeFile file: "${env.WORKSPACE}/india-server.pem", text: readFile(my_private_key);
 			sh 'cd .. && ls -lRt'
 			sh "ssh -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com"
 	        	sh "ssh -i ${env.WORKSPACE}/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com [ -e myapp.zip ] && rm -- myapp.zip"

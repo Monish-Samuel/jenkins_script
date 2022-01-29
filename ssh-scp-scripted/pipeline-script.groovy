@@ -1,6 +1,6 @@
 node{
   try{
-    def execute()
+    def execute();
   }catch(Exception e){
     throw e;
     println ("Error executing pipeline")

@@ -11,8 +11,11 @@ node{
 }
 
 def execute(){
+  
+  def gitBranch= 'master''
+  
   stage("Clone-Repo"){
-    cloneRepo('master');
+    cloneRepo(gitBranch);
   }
   
   stage("Test"){

@@ -50,6 +50,12 @@ def execute(){
 				buildNumber: buildNo,
 			)
 	}
+	stage('Move Package to EC2'){
+		sh "mv ${env.WORKSPACE}/shell_testing/myapp-${buildNo}.zip ${env.WORKSPACE}/shell_testing/myapp.zip"
+		sh "ssh -i $HOME/.ssh/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com"
+		sh "ssh -i $HOME/.ssh/india-server.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com [ -e myapp.zip ] && rm -- myapp.zip"
+		sh 'scp -i $HOME/.ssh/india-server.pem myapp.zip ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com:/'
+	}
   
 }
 

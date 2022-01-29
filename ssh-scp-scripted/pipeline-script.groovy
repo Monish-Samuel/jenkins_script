@@ -56,10 +56,9 @@ def execute(){
 		withCredentials([file(credentialsId: 'india-server.pem', variable: 'my_private_key')]){
 			sh "mv ${env.WORKSPACE}/shell_testing/myapp-${buildNo}.zip ${env.WORKSPACE}/shell_testing/myapp.zip"
 			writeFile file: 'private.pem', text: readFile(my_private_key);
-			sh 'cat private.pem'
-			sh "ssh -i -t private.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com"
-	        	sh "ssh -i -t private.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com [ -e myapp.zip ] && rm -- myapp.zip"
-			sh "scp -i -t private.pem myapp.zip ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com:/"	
+			sh "ssh -i -tt ${env.WORKSPACE}/private.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com"
+	        	sh "ssh -i -tt ${env.WORKSPACE}/private.pem ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com [ -e myapp.zip ] && rm -- myapp.zip"
+			sh "scp -i -tt ${env.WORKSPACE}/private.pem myapp.zip ec2-user@ec2-13-232-137-52.ap-south-1.compute.amazonaws.com:/"	
 		}
 	}
   

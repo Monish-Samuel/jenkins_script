@@ -27,6 +27,7 @@ def execute(){
 	stage('Build-Automation'){
 		sh "chmod +x -R ${env.WORKSPACE}"
 		sh "${env.WORKSPACE}/shell_testing/build_scripts/zip_creation.sh"
+		sh "cd ${env.WORKSPACE} && ls -lRt"
 	    }
 	
 	stage('Build-Management'){

@@ -15,6 +15,7 @@ def execute(){
   def gitBranch= 'master';
   
   stage("Clone-Repo"){
+    println (gitBranch);
     cloneRepo(gitBranch);
   }
   

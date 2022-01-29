@@ -26,7 +26,7 @@ def execute(){
 def cloneRepo(branchName){
   withCredentials([string(credentialsId: 'commit_git_token', variable: 'TOKEN')]){
     sh '''
-    git clone -b $branchName https://${TOKEN}@github.com/Monish-Samuel/shell_testing
+    git clone -b ${branchName} https://${TOKEN}@github.com/Monish-Samuel/shell_testing
     cd shell_testing
     ls -lRt
     '''

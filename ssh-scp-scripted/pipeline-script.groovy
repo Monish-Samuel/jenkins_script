@@ -12,7 +12,7 @@ node{
 
 def execute(){
   
-  def gitBranch= 'master''
+  def gitBranch= 'master';
   
   stage("Clone-Repo"){
     cloneRepo(gitBranch);

@@ -9,10 +9,10 @@ node{
 
 execute(){
   stage("Test"){
-    echo 'Test 1 completed
+    echo 'Test 1 completed'
   }
   
   stage("Test"){
-    echo 'Test 2 completed
+    echo 'Test 2 completed'
   }
 }

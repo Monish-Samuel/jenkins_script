@@ -25,6 +25,7 @@ def execute(){
   currentBuild.displayName = "${buildNumber}"
   currentBuild.description= "${gitbranch}"
   env.buildNo= buildNumber
+  workingDir= "${env.WORKSPACE}/shell_testing";	
 	
 // 	stage('Build-Automation'){
 // 		sh "chmod +x -R ${env.WORKSPACE}"
@@ -33,12 +34,14 @@ def execute(){
 	
 	stage('Sonar Quality and Gate'){
 		def SONARSCANNER = tool "sonar-scanner";
-		sh "mv ${env.WORKSPACE}/shell_testing/sonar-project.properties ${env.WORKSPACE}/sonar-project.properties"
-            	withSonarQubeEnv("sonar") {
-			sh "${SONARSCANNER}/sonar-scanner"
-			timeout(time: 1, unit: 'MINUTES') {
-                    		waitForQualityGate abortPipeline: true
-                	}
+		//sh "mv ${env.WORKSPACE}/shell_testing/sonar-project.properties ${env.WORKSPACE}/sonar-project.properties"
+		dir(workingDir){
+            		withSonarQubeEnv("sonar") {
+				sh "${SONARSCANNER}/sonar-scanner"
+				timeout(time: 1, unit: 'MINUTES') {
+                    			waitForQualityGate abortPipeline: true
+                		}
+			}
 		}
 	}
 	

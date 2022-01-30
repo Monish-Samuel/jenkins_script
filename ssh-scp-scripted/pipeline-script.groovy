@@ -88,8 +88,9 @@ def execute(){
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'mkdir flask-app'"
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'unzip myapp.zip -d flask-app'"
 			
-			// build docker image
+			// build docker image and scan image
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'cd flask-app && docker build -t flask-app .'"
+			//sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'docker scan flask-app:latest'"
 			
 			// tag image and push to ecr
 			sh "ssh -o StrictHostKeyChecking=no -i ${env.WORKSPACE}/india-server.pem ec2-user@${serverIP} 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 975072647018.dkr.ecr.ap-south-1.amazonaws.com'"

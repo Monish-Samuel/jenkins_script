@@ -35,7 +35,7 @@ def execute(){
 	stage('Sonar Quality and Gate'){
 		def SONARSCANNER = tool "sonar-scanner";
 		dir(workingDir){
-            		withSonarQubeEnv("sonar") {
+            		withSonarQubeEnv("sonar-jenkins") {
 				sh "${SONARSCANNER}/sonar-scanner"
 			}
 		}

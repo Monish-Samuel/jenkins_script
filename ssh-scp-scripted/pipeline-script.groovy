@@ -38,10 +38,10 @@ def execute(){
 		dir(workingDir){
             		withSonarQubeEnv("sonar") {
 				sh "${SONARSCANNER}/sonar-scanner"
-				timeout(time: 1, unit: 'MINUTES') {
-                    			waitForQualityGate abortPipeline: true
-                		}
 			}
+		timeout(time: 1, unit: 'MINUTES') {
+                	waitForQualityGate abortPipeline: true
+                	}
 		}
 	}
 	

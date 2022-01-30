@@ -33,8 +33,9 @@ def execute(){
 	
 	stage('Sonar Quality and Gate'){
 		def SONARSCANNER = tool "sonar-scanner";
+		sh "mv ${env.WORKSPACE}/shell_testing/sonar-project.properties ${env.WORKSPACE}/sonar-project.properties"
             	withSonarQubeEnv("sonar") {
-			sh "cd ${env.WORKSPACE}/shell_testing ${SONARSCANNER}/sonar-scanner"
+			sh "${SONARSCANNER}/sonar-scanner"
 			timeout(time: 1, unit: 'MINUTES') {
                     		waitForQualityGate abortPipeline: true
                 	}

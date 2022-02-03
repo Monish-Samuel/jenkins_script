@@ -1,13 +1,11 @@
 node{
   try{
+   deleteDir();
    cloneRepo('jenkins_script','master')
    execute();
   }catch(Exception e){
     println ("Error executing pipeline");
     throw e;
-  }
-  finally{
-    cleanWs();
   }
 }
 

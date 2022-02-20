@@ -22,6 +22,7 @@ def execute(){
   def buildNumber= majorver + "." + minorver + "." + patchver + "." + BUILD_NUMBER
   currentBuild.displayName = "${buildNumber}"
   currentBuild.description= "${gitbranch}"
+  manager.addShortText("Branch:${gitbranch}", "black", "yellow", "0px", "green");	
   env.buildNo= buildNumber
   workingDir= "${env.WORKSPACE}/shell_testing";	
 	

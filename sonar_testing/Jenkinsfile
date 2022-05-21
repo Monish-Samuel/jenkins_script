@@ -33,13 +33,15 @@ agent any
 	}
    	stage("Quality Gate") {
             steps {
-		   try{    
-                     	timeout(time: 1, unit: 'MINUTES') {
-                    	waitForQualityGate abortPipeline: true
-			}
-		   }catch(Exception e){
-		      	throw e;	
-		   }
+		    script {
+		   	try{    
+                     		timeout(time: 1, unit: 'MINUTES') {
+                    		waitForQualityGate abortPipeline: true
+				}
+		   	}catch(Exception e){
+		      		throw e;	
+		   	}
+		    }
                 }
             }
 	    stage('Build-Management'){

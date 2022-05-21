@@ -25,6 +25,9 @@ agent any
     			steps {
     				script {
             				def SONARSCANNER = tool "sonar-scanner";
+					def sonarContent= readProperties file:'./sonar-project.properties'
+					sonarContent= sonarContent.replace('{{buildNumber}}',env.buildNo)
+					sonarContent= sonarContent.replace('{{branchName}}',env.buildbranch)
             				withSonarQubeEnv("jenkins_sonarqube") {
                  			bat "${SONARSCANNER}/bin/sonar-scanner.bat"
          			}

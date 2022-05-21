@@ -42,7 +42,6 @@ agent any
 		   }
                 }
             }
-        }
 	    stage('Build-Management'){
 		    steps{
 			    rtUpload (   

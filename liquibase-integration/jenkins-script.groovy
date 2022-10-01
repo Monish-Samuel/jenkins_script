@@ -12,8 +12,8 @@ node{
 }
 
 def execute(){
-  stage('Clone-Repo'){
-		cloneRepo('liquibase-jenkins-integration','master');
+  stage('Checkout-Repo'){
+		checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/liquibase-jenkins-integration']]]);
 	}
   
   stage('Update Properties File'){

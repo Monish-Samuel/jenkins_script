@@ -18,7 +18,7 @@ def execute(){
   
   stage('Update Properties File'){
     dir('jenkins_script'){
-      def propsFile= readFile file: "${env.WORKSPACE}/liquibase-integration/liquibase.properties"
+      def propsFile= readFile file: "liquibase-integration/liquibase.properties"
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'db_creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 	      propsFile.replace('{{username}}',env.USERNAME)
 	      propsFile.replace('{{password}}',env.PASSWORD)

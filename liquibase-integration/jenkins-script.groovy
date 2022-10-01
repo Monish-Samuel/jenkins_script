@@ -6,9 +6,9 @@ node{
     println ("Error executing pipeline");
     throw e;
   }
-//   finally{
-//     deleteDir();
-//   }
+  finally{
+    deleteDir();
+  }
 }
 
 def execute(){
@@ -19,11 +19,18 @@ def execute(){
   stage('Update Properties File'){
     dir('jenkins_script'){
       def propsFile= readFile file: "liquibase-integration/liquibase.properties"
+      def username,password,newFile
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'db_creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-	      propsFile.replace('{{username}}',env.USERNAME)
-	      propsFile.replace('{{password}}',env.PASSWORD)
-	      writeFile file: "${env.WORKSPACE}/liquibase-jenkins-integration/liquibase.properties", text: propsFile
+	      username=env.USERNAME
+	      password=env.PASSWORD
+	      newFile=propsFile.replace("{{username}}",username).replace("{{password}}",password);
+	      writeFile file: "${env.WORKSPACE}/liquibase-jenkins-integration/liquibase.properties", text: newFile
       }
+    }
+  }
+  stage('Execute SQL'){
+    dir('liquibase-jenkins-integration'){
+      bat "liquibase update --log-level=INFO"
     }
   }
 }

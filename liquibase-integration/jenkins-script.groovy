@@ -30,7 +30,7 @@ def execute(){
   }
   stage('Execute SQL'){
     dir('liquibase-jenkins-integration'){
-      bat "liquibase update --log-level=FINE"
+      bat "liquibase update --log-level=INFO"
 	    bat "liquibase tag ${env.BUILD_NUMBER}"
     }
   }

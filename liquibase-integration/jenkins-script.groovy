@@ -13,7 +13,10 @@ node{
 
 def execute(){
   stage('Checkout-Repo'){
+	  bat "mkdir source-repo"
+	  dir('source-repo'){
 		checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Monish-Samuel/liquibase-jenkins-integration']]]);
+	  }
 	}
   
   stage('Update Properties File'){
@@ -24,7 +27,7 @@ def execute(){
 	      username=env.USERNAME
 	      password=env.PASSWORD
 	      newFile=propsFile.replace("{{username}}",username).replace("{{password}}",password);
-	      writeFile file: "${env.WORKSPACE}/liquibase-jenkins-integration/liquibase.properties", text: newFile
+	      writeFile file: "${env.WORKSPACE}/source-repo/liquibase.properties", text: newFile
       }
     }
   }

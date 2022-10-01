@@ -6,9 +6,9 @@ node{
     println ("Error executing pipeline");
     throw e;
   }
-  finally{
-    deleteDir();
-  }
+//   finally{
+//     deleteDir();
+//   }
 }
 
 def execute(){
@@ -16,9 +16,14 @@ def execute(){
 		cloneRepo('liquibase-jenkins-integration','master');
 	}
   
-  stage('Copy Properties File'){
+  stage('Update Properties File'){
     dir('jenkins_script'){
-      powershell "Move-Item –Path ${env.WORKSPACE}/liquibase-integration/liquibase.properties -Destination ${env.WORKSPACE}/liquibase-jenkins-integration"
+      def propsFile= readFile file: "${env.WORKSPACE}/liquibase-integration/liquibase.properties"
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'db_creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+	      propsFile.replace('{{username}}',env.USERNAME)
+	      propsFile.replace('{{password}}',env.PASSWORD)
+	      writeFile file: "${env.WORKSPACE}/liquibase-jenkins-integration/liquibase.properties", text: propsFile
+      }
     }
   }
 }
